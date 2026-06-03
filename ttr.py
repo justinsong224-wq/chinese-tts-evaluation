@@ -7,7 +7,7 @@ TEXT = """
 您说是不是这个理儿？
 """
 VOICES = [
-    ("zh-CN-XiaoxiaoNeural", "01xiaxiao_女声_标准"),
+    ("zh-CN-XiaoxiaoNeural", "01xiaoxiao_女声_标准"),
     ("zh-CN-YunxiNeural", "02yunxi_男声_标准"),
     ("zh-CN-XiaoyiNeural", "03xiaoyi_女声_活泼"),
     ("zh-CN-YunjianNeural", "04yunjian_男声_激昂"),
