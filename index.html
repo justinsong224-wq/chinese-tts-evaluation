@@ -1,0 +1,511 @@
+Here is the translated English version of your HTML file. I kept the code structure intact and translated the content
+using simple, everyday English so it reads smoothly and clearly.
+
+*(Note: I kept the actual "Test Text" paragraph and the short pronunciation examples in Chinese, since those are the
+specific targets being evaluated).*
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chinese TTS Voice Quality Evaluation · Justin S.</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f5f5f3;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555550;
+      --text-tertiary: #999990;
+      --border: rgba(0, 0, 0, 0.12);
+      --border-em: rgba(0, 0, 0, 0.25);
+      --info-bg: #e6f1fb;
+      --info-text: #185fa5;
+      --success-bg: #eaf3de;
+      --success-text: #3b6d11;
+      --warn-bg: #faeeda;
+      --warn-text: #854f0b;
+      --danger-bg: #fcebeb;
+      --danger-text: #a32d2d;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1a;
+        --bg-secondary: #252523;
+        --text-primary: #f0efe8;
+        --text-secondary: #a8a89e;
+        --text-tertiary: #666660;
+        --border: rgba(255, 255, 255, 0.1);
+        --border-em: rgba(255, 255, 255, 0.22);
+        --info-bg: #0c2a45;
+        --info-text: #85b7eb;
+        --success-bg: #173404;
+        --success-text: #97c459;
+        --warn-bg: #412402;
+        --warn-text: #ef9f27;
+        --danger-bg: #501313;
+        --danger-text: #f09595;
+      }
+    }
+
+    body {
+      font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      padding: 0 1rem;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 0 4rem;
+    }
+
+    /* Hero */
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: var(--radius-md);
+      background: var(--info-bg);
+      color: var(--info-text);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    /* Script box */
+    .script-box {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--info-text);
+    }
+
+    .script-box p {
+      font-size: 15px;
+      color: var(--text-primary);
+      line-height: 2;
+    }
+
+    .highlight {
+      color: var(--info-text);
+      font-weight: 500;
+    }
+
+    /* Dimension cards */
+    .dim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 2.5rem;
+    }
+
+    .dim-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+    }
+
+    .dim-name {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .dim-example {
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+
+    /* Divider */
+    hr {
+      border: none;
+      border-top: 0.5px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* Audio cards */
+    .audio-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 2.5rem;
+    }
+
+    .audio-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+    }
+
+    .audio-card.human {
+      border: 2px solid var(--info-text);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .card-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-human {
+      background: var(--info-bg);
+      color: var(--info-text);
+    }
+
+    .badge-tts {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+
+    audio {
+      width: 100%;
+      height: 36px;
+      margin-bottom: 10px;
+      border-radius: var(--radius-md);
+    }
+
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .dim-tag {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      border: 0.5px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .dim-tag.good {
+      background: var(--success-bg);
+      color: var(--success-text);
+      border-color: transparent;
+    }
+
+    .dim-tag.warn {
+      background: var(--warn-bg);
+      color: var(--warn-text);
+      border-color: transparent;
+    }
+
+    .dim-tag.bad {
+      background: var(--danger-bg);
+      color: var(--danger-text);
+      border-color: transparent;
+    }
+
+    .analysis-note {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Findings */
+    .finding {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .finding-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .finding-body {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .footer a {
+      color: var(--info-text);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="tag">Voice Quality Evaluation · 2025</div>
+    <h1>Comparison: Chinese TTS Systems vs. Human Voice</h1>
+    <p class="hero-desc">
+      We picked one Chinese text that has erhua (r-coloring), numbers, long pauses, and modal particles. We compared 4
+      popular TTS engines with a real human voice. We want to see the differences in how natural they sound, their
+      rhythm, and emotion. This helps us understand what AI voices can and cannot do right now.
+    </p>
+
+    <div class="section-label">Test Text</div>
+    <div class="script-box">
+      <p>
+        今<span class="highlight">儿</span>个天气不错，您要是有空的话，咱们可以去公园走走。
+        <span class="highlight">2025年</span>以来，人工智能技术发展得越来越快，
+        但很多人还是觉得，机器说话<span class="highlight">嘛</span>，总归少了<span class="highlight">点儿</span>人情味。
+        您说是不是这个<span class="highlight">理儿</span>？
+      </p>
+    </div>
+
+    <div class="section-label">Evaluation Dimensions</div>
+    <div class="dim-grid">
+      <div class="dim-card">
+        <div class="dim-name">Erhua (R-coloring)</div>
+        <div class="dim-example">今儿 / 点儿 / 理儿</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Number Reading</div>
+        <div class="dim-example">Reading '2025年'</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Long Pauses</div>
+        <div class="dim-example">Comma/Period rhythm</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Modal Particles</div>
+        <div class="dim-example">Tone of '嘛' (ma)</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">Overall Naturalness</div>
+        <div class="dim-example">Overall feeling score</div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="section-label">Audio Comparison</div>
+    <div class="audio-grid">
+
+      <div class="audio-card human">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Human Recording (Baseline)</div>
+            <div class="card-sub">Justin S. · Native Mandarin Speaker</div>
+          </div>
+          <span class="badge badge-human">Human</span>
+        </div>
+        <audio controls src="001human_justin.mp3"></audio>
+        <div class="tags-row">
+          <span class="dim-tag good">Natural Erhua</span>
+          <span class="dim-tag good">Good Pauses</span>
+          <span class="dim-tag good">Spot-on Particles</span>
+          <span class="dim-tag good">Real Emotion</span>
+        </div>
+        <p class="analysis-note">
+          Used as the baseline. The erhua sounds natural, the word '嘛' feels like spoken language, the number '2025年' is
+          read correctly, and the overall rhythm sounds like a daily chat.
+        </p>
+      </div>
+
+      <div class="audio-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Xiaoxiao (XiaoxiaoNeural)</div>
+            <div class="card-sub">Edge TTS · Female · Standard Style</div>
+          </div>
+          <span class="badge badge-tts">TTS</span>
+        </div>
+        <audio controls src="01xiaoxiao_女声_标准.mp3"></audio>
+        <div class="tags-row">
+          <span class="dim-tag good">Clear Voice</span>
+          <span class="dim-tag warn">Stiff Erhua</span>
+          <span class="dim-tag warn">Flat Particles</span>
+          <span class="dim-tag good">Accurate Pauses</span>
+        </div>
+        <p class="analysis-note">
+          Totally natural voice,the pronunciation is good,but the word "今儿" is prononced incorrectly,and there is a bit
+          of machine-like feeling.
+        </p>
+      </div>
+
+      <div class="audio-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Yunxi (YunxiNeural)</div>
+            <div class="card-sub">Edge TTS · Male · Standard Style</div>
+          </div>
+          <span class="badge badge-tts">TTS</span>
+        </div>
+        <audio controls src="02yunxi_男声_标准.mp3"></audio>
+        <div class="tags-row">
+          <span class="dim-tag good">Standard Sound</span>
+          <span class="dim-tag warn">Robotic Pauses</span>
+          <span class="dim-tag bad">Missing Erhua</span>
+          <span class="dim-tag warn">Fast Rhythm</span>
+        </div>
+        <p class="analysis-note">
+          I think it is the best voice in the pausing ,but it is too fast and a lot of machine-like feeling.
+        </p>
+      </div>
+
+      <div class="audio-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Xiaoyi (XiaoyiNeural)</div>
+            <div class="card-sub">Edge TTS · Female · Cheerful Style</div>
+          </div>
+          <span class="badge badge-tts">TTS</span>
+        </div>
+        <audio controls src="03xiaoyi_女声_活泼.mp3"></audio>
+        <div class="tags-row">
+          <span class="dim-tag good">More Emotion</span>
+          <span class="dim-tag warn">Heavy Particles</span>
+          <span class="dim-tag warn">Unstable Erhua</span>
+          <span class="dim-tag bad">Weak Rhythm</span>
+        </div>
+        <p class="analysis-note">
+          To be honest,I don't like this voice,its voice is too sharp and unnatural,but compared to the xiaoxiao,the
+          performance in "儿" is better.
+      </div>
+
+      <div class="audio-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Yunjian (YunjianNeural)</div>
+            <div class="card-sub">Edge TTS · Male · Excited Style</div>
+          </div>
+          <span class="badge badge-tts">TTS</span>
+        </div>
+        <audio controls src="04yunjian_男声_激昂.mp3"></audio>
+        <div class="tags-row">
+          <span class="dim-tag bad">Wrong Style</span>
+          <span class="dim-tag bad">Missing Erhua</span>
+          <span class="dim-tag warn">Stiff Pauses</span>
+          <span class="dim-tag good">Clear Voice</span>
+        </div>
+        <p class="analysis-note">
+          I would say this voice is like the xiaoyi,and it just become the man's voice.
+        </p>
+      </div>
+
+    </div>
+
+    <hr />
+
+    <div class="section-label">Core Findings</div>
+
+    <div class="finding" style="border-left: 3px solid #1d9e75;">
+      <div class="finding-title">Erhua is the biggest weakness for current TTS</div>
+      <div class="finding-body">
+        In a word.the pronunciation of "儿" is one of the biggest weaknesses for current TTS.Maybe because it is a
+        conjunction,and it is not easy to pronounce correctly.
+      </div>
+    </div>
+
+    <div class="finding" style="border-left: 3px solid #ba7517;">
+      <div class="finding-title">Styles don't match the situation well</div>
+      <div class="finding-body">
+        The common shortcoming of current TTS is that their voice are full of machine-like feeling,and it is hard to let
+        they consider the emotion of the words and sentences.
+      </div>
+    </div>
+
+    <div class="finding" style="border-left: 3px solid #185fa5;">
+      <div class="finding-title">Emotions in particles still need human data</div>
+      <div class="finding-body">
+        Modal particles (嘛, 呢, 啊) carry a lot of emotion. TTS usually can't catch the context. High-qualityhuman voice
+        data is the key to fixing this.
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="footer">
+      <span>Justin S. · Chinese Voice Evaluation Portfolio · 2025</span>
+      <a href="https://commonvoice.mozilla.org/zh-CN" target="_blank">Common Voice Contributions ↗</a>
+    </div>
+
+  </div>
+</body>
+
+</html>
+
+```
